@@ -1,0 +1,22 @@
+4.3 Transfer NEO funds between NEO accounts
+AIM: To perform fund transfer between NEO Wallet accounts
+PROCESS:
+a. To transfer funds,first we should have wallet accounts. Ensure you have
+created at least two wallet accounts using above 4.2 task.
+b. Consider we have TWO user defined accounts namely “mvsr” and “IOT”.
+We already have a “genesis” account whose wallet status is shown below.
+c. To transfer funds between “mvsr” and “IOT”, we must first import a few
+NEO balances and NEO GAS from the “genesis” account. Under the
+Blockchains tab, right click on “neowallet.neo-express” and select “Transfer
+assets”.
+d. Choose type of asset as “NEO”
+e. Enter the amount of NEO to be transferred. For example 100.
+f. Choose the sender account as “genesis” and receiver account as “mvsr”.
+After a few seconds ,funds will be transferred and balance will be updated in
+both accounts.
+g. Repeat step-c and Choose type of asset as “GAS”
+h. Repeat step-f and enter “GAS” amount as 1000. After few seconds “1000”
+GAS will be transferred from “genesis” to “mvsr”
+i. Now repeat step-c to step-f to transfer funds from “mvsr” to “IOT”. After
+transferring 50 NEO from “mvsr” to “IOT”,the status of accounts is shown
+below.
