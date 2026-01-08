@@ -1,0 +1,352 @@
+3.1 Solidity program to display owner address and message
+AIM: to write a solidity program that display contract’s owner address and a welcome
+message
+PROCESS:
+a) Open REMIX IDE and create a new file message.sol
+b) Write the below solidity program and save it
+c) Goto Solidity Compiler tab and choose the compiler 0.8.0 and click on “compile:”
+button
+d) Goto Deploy & transaction tab, click on “Deploy” button
+e) Now invoke necessary functions and access variables used in the program.
+Program:
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract Message
+{
+string message;
+address owner=msg.sender;
+function setMessage(string memory _m) public
+{
+message=_m;
+}
+function getMessage() public view returns(string memory)
+{
+return message;
+}
+function getOwner() public view returns(address)
+{
+return owner;
+}
+}
+
+3.2 Solidity program to perform ether transfer
+AIM: To write a solidity program that performs ether transfer
+PROCESS:
+a) Open REMIX IDE and create a new file EtherTransfer.sol
+b) Write the below solidity program and save it
+c) Goto Solidity Compiler tab and choose the compiler 0.8.0 and click on “compile:” button
+d) Goto Deploy & transaction tab, click on “Deploy” button
+e) In the Accounts section ,select any account and copy it.This will be the receiver's account.
+f) Also Enter Amount in Ethers in Value section
+g) Now copy the receiver's account in the ‘sendEther’ function and call sendEther function.
+h) Amount will be transferred and call other functions to see outputs.
+Program:
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract EtherTransfer
+{
+address public sender;
+address public receiver;
+uint public amount;
+function sendEther(address payable _receiver) public payable {
+require(msg.value > 0, "You must send some Ether");
+sender = msg.sender;
+receiver = _receiver;
+amount = msg.value;
+_receiver.transfer(msg.value);
+}
+function getDetails() public view returns (address, address, uint) {
+return (sender, receiver, amount);
+}
+function getReceiverBalance() public view returns (uint) {
+return address(receiver).balance;
+}
+function getSenderBalance() public view returns (uint) {
+return address(sender).balance;
+} }
+
+3.2 Solidity program to reverse a digit
+AIM: To write a solidity program to reverse a digit
+PROCESS:
+a) Open REMIX IDE and create a new file EtherTransfer.sol
+b) Write the below solidity program and save it
+c) Goto Solidity Compiler tab and choose the compiler 0.8.0 and click on “compile:”
+button
+d) Goto Deploy & transaction tab, click on “Deploy” button
+e) Enter a digit in the textbox beside getReverse function and call getReverse function.
+f) Output will be displayed
+Program
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract DigitReverse
+{
+function getReverse(uint num)public pure returns (uint)
+{
+uint rev=0;
+uint rem=0;
+while (num!=0)
+{
+rem=num%10;
+rev=rev*10+rem;
+num/=10;
+}
+return rev;
+}
+}
+
+3.4 Solidity program to Read and Check whether two numbers are Gapful or not
+AIM: To write a solidity program to Read and Check whether two numbers are Gapful or
+not
+PROCESS:
+a) Open REMIX IDE and create a new file Gapful.sol
+b) Write the below solidity program and save it
+c) Goto Solidity Compiler tab and choose the compiler 0.8.0 and click on “compile:”
+button
+d) Goto Deploy & transaction tab, click on “Deploy” button
+e) Enter a digit in the textbox beside checkGapful function and call checkGapful function.
+f) Output will be displayed
+program:
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract Gapful {
+function isGapful(uint256 num)private pure returns (bool) {
+if (num < 100) {
+return false;
+}
+uint256 lastDigit = num % 10;
+uint256 firstDigit = num;
+while (firstDigit >= 10) {
+firstDigit /= 10;
+}
+uint256 divisor = firstDigit * 10 + lastDigit;
+return num % divisor == 0;
+}
+function display(uint256 num) public pure returns (string memory) {
+if (isGapful(num)) {
+return "Gapful";
+} else {
+return "Not Gapful";
+}
+}
+}
+
+3.5 Solidity program to demonstrate on Parametrized constructor
+AIM: To write a solidity program to demonstrate on Parametrized constructor
+PROCESS:
+a) Open REMIX IDE and create a new file ConstructorDemo.sol
+b) Write the below solidity program and save it
+c) Goto Solidity Compiler tab and choose the compiler 0.8.0 and click on “compile:”
+button
+d) Goto Deploy & transaction tab, Enter two numbers separated by commas in the
+textbox beside
+“Deploy” button.Click on the “Deploy” button.
+e) Call get() function.
+f) Output will be displayed
+Program:
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract ConstructorDemo
+{
+uint public x;
+uint public y;
+constructor(uint _x,uint _y)
+{
+x = _x;
+y = _y;
+}
+function get() public view returns(uint)
+{
+return x+y;
+}
+}
+
+3.6 Solidity program to Read an Array dynamically and find the sum of biggest and smallest
+elements
+AIM: To write a solidity program to Read an Array dynamically and find the sum of biggest and
+smallest elements.
+PROCESS:
+a) Open REMIX IDE and create a new file ArrayDemo.sol
+b) Write the below solidity program and save it
+c) Goto Solidity Compiler tab and choose the compiler 0.8.0 and click on “compile” button
+d) Goto Deploy & transaction tab, Enter a number in the textbox beside the “readArray”
+button.Click on the “readArray” button.
+e) Repeat above step-d for 5-6 times with different numbers.
+f) Call display,get,getLength functions.
+g) Output will be displayed
+Program:
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract ArrayDemo
+{
+uint[] arr;
+function readArray(uint _value) public
+{
+arr.push(_value);
+}
+function getLength() public view returns(uint)
+{
+return arr.length;
+}
+function get() public view returns(uint,uint,uint)
+{
+uint max=arr[0];
+uint min=arr[0];
+for(uint i=1;i<arr.length;i++) {
+if(arr[i]>max) {
+max=arr[i]; }
+if(arr[i]<min) {
+min=arr[i]; } }
+return (max,min,max+min); }
+function display()public view returns(uint[] memory)
+{
+return arr;
+} }
+
+3.7 Solidity program to compute Student Grade Report using Average marks using struct
+AIM: To write a Solidity program to compute Student Grade Report using Average marks using struct
+PROCESS:
+a) Open REMIX IDE and create a new file GradeReport.sol
+b) Write the below solidity program and save it
+c) Goto Solidity Compiler tab and choose the compiler 0.8.0 and click on “compile” button
+d) Goto Deploy & transaction tab, Enter a number in the textbox beside the “readArray”
+button.Click on the “readArray” button.
+e) Repeat above step-d for 5-6 times with different numbers.
+f) Call display,get,getLength functions.
+g) Output will be displayed
+program:
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract GradeReport
+{
+struct student
+{
+string name;
+uint rollno;
+uint s1; uint s2; uint s3;
+}
+student[] public stds;
+function setStudent(string memory n,uint r,uint m1,uint m2,uint m3)public
+{
+stds.push(student(n,r,m1,m2,m3));
+}
+function getAverage(uint index)private view returns (uint)
+{
+uint total=stds[index].s1+stds[index].s2+stds[index].s3;
+return total/stds.length;
+}
+function getReport(uint index)public view returns (string memory) {
+uint report=getAverage(index);
+if (report>=70)
+{
+return "Distinction";
+} else if(report>=60 && report <70)
+{
+return "First class"; } else if(report>=50 && report <60) { return "Second
+class"; }
+else return "Fail"; }
+function getStudentCount()public view returns(uint) {
+return stds.length; } }
+
+3.8 Solidity Program to write Self Ether Transfer using mapping
+AIM: To write a Solidity Program to write Self Ether Transfer using mapping
+PROCESS:
+a) Open REMIX IDE and create a new file SelfEtherTransfer.sol
+b) Write the below solidity program and save it
+c) Goto Solidity Compiler tab and choose the compiler 0.8.0 and click on
+“compile” button
+d) Goto Deploy & transaction tab,click on “Deploy” button.
+e) Enter a number in the textbox under the “Value” in Ethers.Click on the
+“deposit” button.
+f) Call withdraw,balance,getbalances functions.
+g) Output will be displayed
+
+program:
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract EthersMapping
+{
+mapping ( address => uint ) public balances;
+function deposit() public payable
+{
+balances[msg.sender]+=msg.value;
+}
+function getBalance() public view returns (uint)
+{
+return balances[msg.sender];
+}
+function withdraw(uint _amount) public
+{
+require(balances[msg.sender]>= _amount, "Insufficient funds");
+balances[msg.sender]-= _amount;
+payable (msg.sender).transfer(_amount);
+} }
+
+3.9 Solidity program to import a Contract into another Contract
+AIM: To write a Solidity program to import a Contract into another Contract
+PROCESS:
+a) Open REMIX IDE and create new files: A.sol and B.sol
+b) Write the below solidity programs and save it
+c) Goto Solidity Compiler tab and choose the compiler 0.8.0 and compile A.sol and B.sol
+d) Goto Deploy & transaction tab,Select A.sol and click on “Deploy” button.
+e) Next Select B.sol, copy A.sol deployed contract address and paste it beside ‘Deploy’ button.
+Now click on the “Deploy” button.
+f) Call “showB()” function
+g) Output will be displayed
+program:
+A.sol
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract A
+{
+function showA()external pure returns(string memory)
+{
+return "Hello from A";
+}
+}
+B.sol
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+import "./A.sol";
+contract B
+{
+A a1;
+constructor(address _a1)
+{
+a1 = A(_a1);
+}
+function showB()public view returns(string memory)
+{
+return a1.showA();
+} }
+3.10 Solidity program to demonstrate inheritance
+
+AIM: To write a Solidity program to demonstrate inheritance
+PROCESS:
+a) Open REMIX IDE and create new files: A.sol and B.sol
+b) Write the below solidity programs and save it
+c) Goto Solidity Compiler tab and choose the compiler 0.8.0 and compile A.sol and B.sol
+d) Goto Deploy & transaction tab,Select B.sol and click on “Deploy” button.
+e) Call “showB()” and “showA()” functions
+f) Output will be displayed
+program:
+A.sol
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract A
+{
+function showA()public pure returns(string memory)
+{
+return "Hello from A contract";
+}
+}
+B.sol
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+import "./A.sol";
+contract B is A
+{
+function showB()public pure returns(string memory)
+{
+return "Hello from B Contract";
+}
+}
