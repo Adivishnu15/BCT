@@ -1,0 +1,129 @@
+1.1 Working with openSSL Tool (encrypt,decrypt text,generate private & public keys)
+1.1) Working with openSSL Tool
+What is openSSL? It is a cryptographic library that provides built-in commands to generate
+private & public keys,encrypts & decrypts given text, generates a digital signature, hash
+functions and also to fetch and IP addresses of a URL.
+In Ubuntu, open Terminal and type the command below to check openSSL exists or not.
+openssl version
+1.1.1) Command to Encrypt the plaintext
+AIM: To create an encrypted file using openssl command
+PROCESS:
+a) Open terminal and type below commands.It will create and open a new text file.
+touch plaintext.txt
+open plaintext.txt
+b) Now add some text in the plaintext and save it.
+c) In the terminal, type below openssl command.Set below passphrase.
+openssl enc -aes256 -salt -in plaintext.txt -out encrypted.enc
+Passphrase:12345678
+1.1.2) Command to Decrypt the Ciphertext
+AIM: To decrypt the plaintext from encrypted file using openssl command
+PROCESS:
+a) Open the terminal, type below openssl command.Set below passphrase.
+Note: This passphrase should be same as for passphrase used for encrypted text in 1.1
+openssl enc -d -aes256 -in encrypted.enc -out decrypted.txt
+Passphrase:12345678
+1.1.4) Command to generate private key
+AIM: To generate a private key file (.pem) using openssl command
+PROCESS:
+a) Create a folder “BCTLAB” and open it in a terminal
+b) Type below openssl command which uses RSA algorithm to generate private key file. Enter the
+below passphrase.
+openssl genpkey -algorithm RSA -out private_key.pem -aes256
+Passphrase:1234
+1.1.5) Command to generate public key using private key
+AIM: To generate a public key file (.pem) using private key file
+PROCESS:
+a) Open the folder “BCTLAB” in the terminal.
+b) Check the file “private_key.pem” exists in folder or not.If not, create it using openssl command
+in 1.4
+c) Type the below openssl command to generate the public key.
+Enter the passphrase same as used for creating private key
+openssl rsa -in private_key.pem -pubout -out public_key.pem
+Passphrase:1234
+
+1.2 Create a Digital Signature using private key for demo.txt
+AIM: To generate a digital signature file using a private key.
+PROCESS:
+a) Open folder “BCTLAB” in terminal
+b) Type below commands to create new text file “demo.txt”
+touch demo.txt
+open demo.txt
+Add some content in the above file
+c) Check the file private_key.pem file exists. If not, create one using the private key openssl
+command.
+d) Type the below openssl command to create a digital signature. Enter passphrase 1234
+openssl dgst -sha256 -sign private_key.pem -out file.sig demo.txt
+e) A new file “file.sig” will be generated
+AIM: To generate a digital signature file using a private key.
+PROCESS:
+a) Open folder “BCTLAB” in terminal
+b) Type below commands to create new text file “demo.txt”
+touch demo.txt
+open demo.txt
+Add some content in the above file
+c) Check the file private_key.pem file exists. If not, create one using the private key openssl
+command.
+d) Type the below openssl command to create a digital signature. Enter passphrase 1234
+openssl dgst -sha256 -sign private_key.pem -out file.sig demo.txt
+e) A new file “file.sig” will be generated
+
+1.4 Node JS program to demonstrate encryption & decryption
+AIM: To write and execute a Node JS program to demonstrate encryption
+and decryption
+PROCESS:
+a) Create a folder “BCTLAB” and open it in VS Code IDE
+b) Create a new file “Encrypt.js” , write below code and save it.
+c) Open Terminal and type below commands
+npm install prompt-sync
+node Encrypt.js
+program :
+const crypto = require("crypto");
+const prompt=require("prompt-sync")()
+const algorithm = "aes-256-cbc";
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
+const encrypt = (text) => {
+let cipher = crypto.createCipheriv(algorithm, key, iv);
+let encrypted = cipher.update(text, "utf8", "hex");
+let encrypted2=encrypted+cipher.final("hex");
+return encrypted2;
+};
+const decrypt = (encryptedText) => {
+let decipher = crypto.createDecipheriv(algorithm, key, iv);
+let decrypted = decipher.update(encryptedText, "hex", "utf8")
+let decrypted2=decrypted+decipher.final("utf-8")
+return decrypted2;
+};
+let plaintext = prompt("Enter some text:");
+let ciphertext = encrypt(plaintext);
+console.log("Given Plaintext:", plaintext);
+console.log("Generated Ciphertext:", ciphertext);
+console.log("Decrypted Text:", decrypt(ciphertext));
+
+1.5 Node JS program to demonstrate digital signature
+AIM: To write and execute a Node JS program to demonstrate digital
+signature
+PROCESS:
+a) Create a folder “BCTLAB” and open it in VS Code IDE
+b) Create a new file “DigitalSignature.js” , write below code and save it.
+c) Open Terminal and type below commands
+npm install prompt-sync
+node DigitalSignature.js
+code:
+const prompt=require("prompt-sync")()
+const { generateKeyPairSync, createSign, createVerify } = require("crypto");
+const { publicKey, privateKey } = generateKeyPairSync("rsa",
+{
+modulusLength: 2048,
+});
+let msg = prompt("Enter a message:");
+const sign = createSign("SHA256");
+sign.update(msg);
+sign.end();
+const signature = sign.sign(privateKey, "hex");
+console.log("Digital Signature created for the message:"+msg)
+msg = prompt("Enter message to verify:");
+const verify = createVerify("SHA256");
+verify.update(msg);
+verify.end();
+console.log("Signature Verified:", verify.verify(publicKey,signature, "hex"));
