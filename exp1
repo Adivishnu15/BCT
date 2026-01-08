@@ -127,3 +127,25 @@ const verify = createVerify("SHA256");
 verify.update(msg);
 verify.end();
 console.log("Signature Verified:", verify.verify(publicKey,signature, "hex"));
+
+1.6 Node JS program to demonstrate Hash function generation 
+AIM: To write and execute a Node JS program to demonstrate Hash function generation 
+PROCESS: 
+a) Create a folder “BCTLAB” and open it in VS Code IDE 
+b)  Create a new file “Hashfunction.js” , write below code and save it. 
+c) Open Terminal and type below commands 
+npm install prompt-sync 
+node Hashfunction.js 
+PROGRAM: 
+const crypto = require("crypto"); 
+const prompt=require("prompt-sync")() 
+let msg1 = prompt("Enter message-1:"); 
+let msg2 = prompt("Enter message-2:");; 
+let hash1 = 
+crypto.createHash("sha256").update(msg1).digest("hex"); 
+let hash2 = 
+crypto.createHash("sha256").update(msg2).digest("hex"); 
+console.log("Message\t\tHashFunction\n") 
+console.log("================================\n"); 
+console.log(msg1,"\t", hash1,"\n"); 
+console.log(msg2,"\t", hash2,"\n"); 
