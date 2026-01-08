@@ -1,0 +1,196 @@
+5.1 Linking Ganache in Rabby Wallet and perform Ether Transfer
+AIM: To link Ganache in Rabby Wallet and perform Ether Transfer between
+Ganache accounts.
+PROCESS:
+a. Open Ganache GUI Tool
+b. Ensure Rabby Wallet is added as Chrome Extension in Google Chrome
+browser. Then
+Open Rabby Wallet Tool
+c. Create a new Wallet address in Rabby Wallet
+d. After logging into Rabby Wallet,goto settings and Click on “Add custom
+network”
+e. Fill the details to Add Custom Network as shown below and click on
+confirm.
+f. In the Rabby wallet main page, click on your wallet account. Ie. Seed
+Phrase-1
+g. A new page will appear and click on “Add new address”
+h. Click on “Import Private Key”.
+i. Copy Ganache First Account’s Private Key and paste it in “Import Private
+Key” text box.Click on confirm. Ganache First account will be linked in Rabby
+Wallet successfully. Change its name to “GanachePrivateKey-1”.
+j. Similarly add Ganache second account like above steps and change its
+name to “GanachePrivateKey-2”
+k. In the Rabby Wallet main page,Click on “send”. Choose Send account as
+“GanachePrivateKey-1” and To address as “GanachePrivateKey-2”.
+l. Select amount as Custom Network “ETH” (100)
+m. Now enter the amount to transfer and click on “Send”. Click on “sign” and
+“confirm” transaction.
+n. After a few seconds, the fund transfer will be successful between two
+Ganache accounts.
+o. Open Ganache and check the status of accounts and a block will be
+created to record the transaction.
+
+5.2 Linking Ganache in Remix IDE and execute a smart contract
+AIM: To Link Ganache GUI in Remix IDE and run a smart contract.
+PROCESS:
+a. Open Ganache GUI.
+b. Open Desktop Remix IDE and create a new file “Hello.sol”
+c. Write the below Solidity program and save it.
+d. In Remix IDE, change the solidity compiler version to 0.8.10
+e. Under Deploy & Run Transactions Tab,change Environment to “Custom -
+External http
+Provider”. A dialog box appears as shown below.Edit Ganache URL to
+http://127.0.0.1:7545 and click ok.
+f. Now you will be connected to Ganache and you can access Ganache
+accounts in Remix
+IDE
+g. Click on Deploy and call solidity methods. The block will be created in
+Ganache Tool.
+PROGRAM:
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract Hello
+{
+string message="Hello World";
+function get()public view returns (string memory)
+{
+return message;
+}
+}
+
+5.3 Linking Ganache in Remix IDE and perform ether transfer using smart contract
+AIM: To link Ganache in Remix IDE and perform ether transfer using smart contract
+PROCESS:
+a. Open Ganache GUI.
+b. Open Desktop Remix IDE and create a new file “Transfer.sol”
+c. Write the below Solidity program and save it.
+d. In Remix IDE, change the solidity compiler version to 0.8.10
+e. Under Deploy & Run Transactions Tab,change Environment to “Custom - External http
+Provider”. A dialog box appears as shown below.Edit Ganache URL to
+http://127.0.0.1:7545 and click ok.
+f. Now you will be connected to Ganache and you can access Ganache accounts in Remix
+IDE
+g. Click on Deploy and call solidity methods. The block will be created in Ganache Tool.
+Program:
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+contract EtherTransfer {
+address public sender;
+address public receiver;
+uint public amount;
+function sendEther(address payable _receiver) public payable {
+require(msg.value > 0, "You must send some Ether");
+sender = msg.sender;
+receiver = _receiver;
+amount = msg.value;
+_receiver.transfer(msg.value);
+}
+function getDetails() public view returns (address, address, uint) {
+return (sender, receiver, amount);
+}
+function getReceiverBalance() public view returns (uint) {
+return address(receiver).balance;
+}
+function getSenderBalance() public view returns (uint) {
+return address(sender).balance;
+} }
+
+5.4 Node js program that connects to Ganache, display Ganache accounts and their
+balances
+AIM: ToWrite a NodeJS program that connects to Ganache, display Ganache accounts and their
+balances.
+PROCESS:
+a. Open Ganache GUI
+b. Create a new folder “nodeganache” and open it in VS Code IDE
+c. Create a new file display.js and write the below program and save it.
+d. Open Command Prompt and goto the “nodeganache” directory
+e. Type below nodejs commands to run the program and get the output
+npm install web3 prompt-sync
+node display.js
+PROGRAM:
+const {Web3}=require("web3")
+const prompt=require("prompt-sync")()
+async function sendEther() {
+try {
+const web3=new Web3("http://127.0.0.1:7545")
+console.log("Connected to Ganache...")
+const accounts=await web3.eth.getAccounts()
+const sender=accounts[0]
+const receiver=accounts[1]
+console.log("Ganache Accounts are:\n===========")
+for (let i = 0; i < accounts.length; i++)
+{
+console.log("Account-"+i+"="+accounts[i])
+}
+let a1=parseInt(prompt("Enter an account index to fetch balance:"))
+if(a1<0||a1>accounts.length)
+console.log("Invalid Index")
+else
+{
+console.log("Account:"+a1+"="+accounts[a1])
+const sbal=await web3.eth.getBalance(accounts[a1])
+let ebal=web3.utils.fromWei(sbal,"ether")
+console.log("=====\nBalance of Account-"+a1+"="+ebal+" Ethers")
+}
+} catch (error)
+{
+console.log("Error in Connection="+error); } } sendEther()
+
+5.5 Node js program that connects to Ganache and performs fund transfer among dynamic
+accounts.
+AIM: To Write a NodeJS program that connects to Ganache and performs fund transfer among
+dynamic accounts.
+PROCESS:
+a. Open Ganache GUI
+b. Create a new folder “nodeganache” and open it in VS Code IDE
+c. Create a new file transfer.js and write the below program and save it.
+d. Open Command Prompt and goto the “nodeganache” directory
+e. Type below nodejs commands to run the program and get the output
+npm install web3 prompt-sync
+node transfer.js
+PROGRAM:
+const {Web3}=require("web3")
+const prompt=require("prompt-sync")()
+async function sendEther()
+{
+try {
+const web3=new Web3("http://127.0.0.1:7545")
+console.log("Connected to Ganache...")
+const accounts=await web3.eth.getAccounts()
+console.log("Ganache Accounts are:\n===========")
+for (let i = 0; i < accounts.length; i++)
+{
+console.log("Account-"+i+"="+accounts[i])
+}
+let s=parseInt(prompt("Enter index of sender account:"))
+let r=parseInt(prompt("Enter index of receiver account:"))
+if(s<0||s>accounts.length && r<0||r>accounts.length)
+
+console.log("Invalid Sender/Receiver Index entered!")
+else
+{
+let sbal,rbal,sebal,rebal;
+console.log("Before Transfer..Account Status:\n=========")
+console.log("Sender Account:"+s+"="+accounts[s])
+console.log("Receiver Account:"+r+"="+accounts[r])
+sbal=await web3.eth.getBalance(accounts[s])
+rbal=await web3.eth.getBalance(accounts[r])
+sebal=web3.utils.fromWei(sbal,"ether")
+rebal=web3.utils.fromWei(rbal,"ether")
+console.log("=====\nBalance of Account-"+s+"="+sebal+" Ethers")
+console.log("Balance of Account-"+r+"="+rebal+" Ethers")
+let amt=parseInt(prompt("Enter amount to transfer:"))
+const txn=await
+web3.eth.sendTransaction({from:accounts[s],to:accounts[r],value:web3.utils.toWe
+i(amt,"ether")})
+console.log("Transaction success...Txn Hash="+txn.transactionHash)
+console.log("=======\nAfter Transfer..Account Status:\n=========")
+console.log("Sender Account:"+s+"="+accounts[s])
+console.log("Receiver Account:"+r+"="+accounts[r])
+sbal=await web3.eth.getBalance(accounts[s])
+rbal=await web3.eth.getBalance(accounts[r])
+sebal=web3.utils.fromWei(sbal,"ether")
+rebal=web3.utils.fromWei(rbal,"ether")
+console.log("=====\nBalance of Account-"+s+"="+sebal+" Ethers")
+console.log("Balance of Account-"+r+"="+rebal+" Ethers")
+} } catch (error) { console.log("Error in Connection="+error) } } sendEther()
